@@ -3,5 +3,6 @@
 	<persistence-unit name="EjbPersistence">
 		<jta-data-source>New PostgreSQL</jta-data-source>
 		<class>persistence.Book</class>
+		<class>persistence.Author</class>
 	</persistence-unit>
 </persistence>

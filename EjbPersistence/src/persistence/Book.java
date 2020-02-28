@@ -2,6 +2,7 @@ package persistence;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Set;
 
 
 /**
@@ -17,8 +18,14 @@ public class Book implements Serializable {
 	private Integer id;
 
 	private String name;
+	
+	private Set<Author> authors;
 
 	public Book() {
+	}
+	
+	public Book(String name) {
+		this.name = name;
 	}
 
 	@Id
@@ -32,7 +39,6 @@ public class Book implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name="name")
 	public String getName() {
 		return this.name;
 	}
@@ -40,10 +46,10 @@ public class Book implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	@Override
-	public String toString() {
-		return this.name;
+	
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@JoinTable(name = "book_author", joinColumns = {@JoinColumn(name = "book_id")}, inverseJoinColumns = {@JoinColumn(name = "author_id")})
+	public Set<Author> getAuthors(){
+		return authors;
 	}
-
 }
